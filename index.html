@@ -10,6 +10,7 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Nunito',sans-serif;background:#eef2f7;color:#1a2840;min-height:100vh}
 
+/* HEADER */
 .hdr{background:#0c1b33;height:60px;padding:0 30px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200;box-shadow:0 2px 16px rgba(0,0,0,.35)}
 .hl{display:flex;align-items:center;gap:13px}
 .logo{width:36px;height:36px;border-radius:9px;background:linear-gradient(135deg,#00bcd4,#006fa6);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:#fff;flex-shrink:0}
@@ -24,17 +25,70 @@ body{font-family:'Nunito',sans-serif;background:#eef2f7;color:#1a2840;min-height
 @keyframes rot{to{transform:rotate(360deg)}}
 #fi{display:none}
 
-.fbar{background:#fff;border-bottom:2px solid #e4eaf3;padding:14px 30px;display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end}
-.fg{display:flex;flex-direction:column;gap:5px;flex:1;min-width:138px}
+/* FILTER BAR */
+.fbar{background:#fff;border-bottom:2px solid #e4eaf3;padding:16px 30px;display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end}
+.fg{display:flex;flex-direction:column;gap:5px;flex:1;min-width:150px;position:relative}
 .fg.wide{flex:2.2;min-width:210px}
-.flbl{font-size:9.5px;font-weight:800;text-transform:uppercase;letter-spacing:1.1px;color:#9aaaba}
-select,input[type=text]{width:100%;padding:8px 11px;border:1.5px solid #dde5ef;border-radius:8px;font-family:inherit;font-size:12.5px;color:#1a2840;background:#f7f9fc;transition:border-color .18s,box-shadow .18s}
-select{padding-right:30px;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7'%3E%3Cpath d='M1 1l4.5 4.5L10 1' stroke='%239aaaba' stroke-width='1.8' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;cursor:pointer}
-select:focus,input:focus{outline:none;border-color:#006fa6;box-shadow:0 0 0 3px rgba(0,111,166,.1)}
+.flbl{font-size:9.5px;font-weight:800;text-transform:uppercase;letter-spacing:1.1px;color:#9aaaba;display:flex;align-items:center;justify-content:space-between}
+.flbl-tag{font-size:8.5px;background:#e0f7fa;color:#006fa6;padding:1px 6px;border-radius:10px;font-weight:700;letter-spacing:.3px}
+
+/* SEARCH */
+.search-wrap{position:relative}
+.search-wrap input{width:100%;padding:8px 11px 8px 34px;border:1.5px solid #dde5ef;border-radius:8px;font-family:inherit;font-size:12.5px;color:#1a2840;background:#f7f9fc;transition:border-color .18s,box-shadow .18s}
+.search-wrap input:focus{outline:none;border-color:#006fa6;box-shadow:0 0 0 3px rgba(0,111,166,.1)}
+.search-ico{position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:14px;color:#9aaaba;pointer-events:none}
+
+/* CUSTOM MULTI-SELECT DROPDOWN */
+.ms-wrap{position:relative}
+.ms-trigger{width:100%;padding:8px 32px 8px 11px;border:1.5px solid #dde5ef;border-radius:8px;font-family:inherit;font-size:12.5px;color:#1a2840;background:#f7f9fc;cursor:pointer;text-align:left;display:flex;align-items:center;justify-content:space-between;gap:6px;transition:border-color .18s,box-shadow .18s;min-height:36px;user-select:none}
+.ms-trigger:hover{border-color:#b0bfcc}
+.ms-trigger.open{border-color:#006fa6;box-shadow:0 0 0 3px rgba(0,111,166,.1)}
+.ms-trigger-text{flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-size:12.5px}
+.ms-trigger-text.placeholder{color:#9aaaba}
+.ms-arrow{font-size:10px;color:#9aaaba;flex-shrink:0;transition:transform .2s}
+.ms-trigger.open .ms-arrow{transform:rotate(180deg)}
+
+/* Selected chips inside trigger */
+.ms-chips{display:flex;flex-wrap:wrap;gap:3px;flex:1;overflow:hidden}
+.ms-chip{background:#e0f7fa;color:#006fa6;padding:1px 7px;border-radius:12px;font-size:10.5px;font-weight:700;white-space:nowrap;display:flex;align-items:center;gap:3px}
+.ms-chip-x{cursor:pointer;font-size:11px;line-height:1;opacity:.7}
+.ms-chip-x:hover{opacity:1}
+.ms-more{font-size:10.5px;color:#9aaaba;white-space:nowrap;align-self:center}
+
+/* Dropdown panel */
+.ms-panel{position:absolute;top:calc(100% + 4px);left:0;right:0;background:#fff;border:1.5px solid #dde5ef;border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.12);z-index:500;display:none;overflow:hidden;min-width:220px}
+.ms-panel.open{display:block}
+.ms-panel-search{padding:8px 10px;border-bottom:1px solid #eef2f7}
+.ms-panel-search input{width:100%;padding:5px 9px;border:1.5px solid #dde5ef;border-radius:6px;font-family:inherit;font-size:12px;color:#1a2840;background:#f7f9fc}
+.ms-panel-search input:focus{outline:none;border-color:#006fa6}
+.ms-panel-actions{padding:6px 10px;border-bottom:1px solid #eef2f7;display:flex;gap:8px}
+.ms-act-btn{font-size:11px;font-weight:700;color:#006fa6;cursor:pointer;padding:2px 6px;border-radius:5px;border:none;background:none;font-family:inherit}
+.ms-act-btn:hover{background:#e0f7fa}
+.ms-options{max-height:200px;overflow-y:auto}
+.ms-option{display:flex;align-items:center;gap:9px;padding:8px 12px;cursor:pointer;font-size:12.5px;color:#1a2840;transition:background .1s}
+.ms-option:hover{background:#f7fafd}
+.ms-option.selected{background:#f0fbfc}
+.ms-option input[type=checkbox]{width:14px;height:14px;accent-color:#006fa6;cursor:pointer;flex-shrink:0}
+.ms-option-label{flex:1;line-height:1.3}
+.ms-empty{padding:14px 12px;text-align:center;color:#9aaaba;font-size:12px}
+
+/* Reset button */
 .btn-reset{padding:8px 18px;border:1.5px solid #dde5ef;border-radius:8px;background:#fff;font-family:inherit;font-size:12px;font-weight:700;color:#7a8fa6;cursor:pointer;display:flex;align-items:center;gap:6px;white-space:nowrap;transition:all .18s;align-self:flex-end;flex-shrink:0}
 .btn-reset:hover{border-color:#ef4444;color:#ef4444;background:#fff5f5}
 
-.krow{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:13px;padding:18px 30px 6px}
+/* ACTIVE FILTER TAGS */
+.active-filters{padding:8px 30px;display:flex;flex-wrap:wrap;gap:6px;align-items:center;min-height:0}
+.active-filters:empty{display:none}
+.af-tag{display:flex;align-items:center;gap:5px;background:#fff;border:1px solid #dde5ef;border-radius:20px;padding:3px 10px;font-size:11px;font-weight:700;color:#1a2840}
+.af-tag-key{color:#9aaaba;font-weight:600}
+.af-tag-val{color:#006fa6}
+.af-tag-x{cursor:pointer;color:#9aaaba;font-size:13px;line-height:1;margin-left:2px}
+.af-tag-x:hover{color:#ef4444}
+.af-clear-all{font-size:11px;font-weight:700;color:#ef4444;cursor:pointer;padding:3px 8px;border-radius:20px;border:1px solid #fecaca;background:#fff5f5}
+.af-clear-all:hover{background:#fef2f2}
+
+/* KPI */
+.krow{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:13px;padding:14px 30px 6px}
 .kpi{background:#fff;border-radius:12px;border:1px solid #e4eaf3;padding:15px 17px;position:relative;overflow:hidden;transition:transform .18s,box-shadow .18s}
 .kpi:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.08)}
 .kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
@@ -48,6 +102,7 @@ select:focus,input:focus{outline:none;border-color:#006fa6;box-shadow:0 0 0 3px 
 .ksub{font-size:10px;color:#9aaaba;margin-top:4px}
 .kdetail{font-size:9px;color:#b0bfcc;margin-top:3px;line-height:1.4}
 
+/* TABLE */
 .tcard{margin:14px 30px 30px;background:#fff;border-radius:13px;border:1px solid #e4eaf3;overflow:hidden;box-shadow:0 1px 6px rgba(0,0,0,.04)}
 .thead2{padding:14px 20px;border-bottom:1px solid #eef2f7;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
 .ttitle{font-size:14px;font-weight:800;color:#0c1b33}
@@ -63,6 +118,7 @@ td{padding:10px 14px;font-size:12.5px;vertical-align:top}
 .sdesc{font-size:11px;color:#9aaaba;line-height:1.4;max-width:250px}
 .srno{font-size:11px;color:#c8d5e0;font-weight:700}
 
+/* CHIPS */
 .chip{display:inline-block;padding:2px 9px;border-radius:20px;font-size:10.5px;font-weight:700;white-space:nowrap;line-height:1.7}
 .pf{background:#e0f7fa;color:#006fa6}
 .fi{background:#fff8e1;color:#8a5c00}
@@ -83,6 +139,7 @@ td{padding:10px 14px;font-size:12.5px;vertical-align:top}
 .sop{background:#f0fdf4;color:#166534}
 .sna{background:#f1f5f9;color:#64748b}
 
+/* PAGINATION */
 .pag{display:flex;align-items:center;justify-content:space-between;padding:12px 18px;border-top:1px solid #eef2f7;flex-wrap:wrap;gap:8px}
 .pinfo{font-size:11.5px;color:#9aaaba;font-weight:700}
 .pbtns{display:flex;gap:5px;flex-wrap:wrap}
@@ -97,7 +154,13 @@ td{padding:10px 14px;font-size:12.5px;vertical-align:top}
 .toast{position:fixed;bottom:22px;right:22px;background:#0c1b33;color:#fff;padding:11px 20px;border-radius:10px;font-size:13px;font-weight:700;box-shadow:0 8px 24px rgba(0,0,0,.28);opacity:0;pointer-events:none;z-index:999;border-left:3px solid #00bcd4;transition:all .3s;transform:translateY(8px)}
 .toast.show{opacity:1;pointer-events:auto;transform:translateY(0)}
 
-@media(max-width:700px){.hdr{padding:0 14px}.fbar{padding:12px 14px}.krow{padding:14px 14px 4px}.tcard{margin:12px 14px 20px}}
+@media(max-width:700px){
+  .hdr{padding:0 14px}
+  .fbar{padding:12px 14px}
+  .krow{padding:14px 14px 4px}
+  .tcard{margin:12px 14px 20px}
+  .active-filters{padding:8px 14px}
+}
 </style>
 </head>
 <body>
@@ -119,89 +182,117 @@ td{padding:10px 14px;font-size:12.5px;vertical-align:top}
   </div>
 </header>
 
+<!-- FILTER BAR -->
 <div class="fbar">
+  <!-- Search -->
   <div class="fg wide">
     <div class="flbl">&#128269; Search</div>
-    <input type="text" id="fSearch" placeholder="Search by service name or description&hellip;" oninput="applyFilters()"/>
+    <div class="search-wrap">
+      <span class="search-ico">&#128269;</span>
+      <input type="text" id="fSearch" placeholder="Search by service name or description&hellip;" oninput="applyFilters()"/>
+    </div>
   </div>
 
-  <div class="fg">
-    <div class="flbl">Persona</div>
-    <select id="fPersona" onchange="applyFilters()">
-      <option value="">All Personas (208)</option>
-      <option value="CUG">CUG (16)</option>
-      <option value="Employee">Employee (142)</option>
-      <option value="HRBP">HRBP (33)</option>
-      <option value="Manager">Manager (3)</option>
-      <option value="Store Manager">Store Manager (14)</option>
-    </select>
+  <!-- Persona -->
+  <div class="fg" id="wrap-Persona">
+    <div class="flbl">Persona <span class="flbl-tag">Multi</span></div>
+    <div class="ms-wrap" id="ms-Persona">
+      <div class="ms-trigger" id="trig-Persona" onclick="togglePanel('Persona')">
+        <div class="ms-chips" id="chips-Persona"><span class="ms-trigger-text placeholder">All Personas</span></div>
+        <span class="ms-arrow">&#9660;</span>
+      </div>
+      <div class="ms-panel" id="panel-Persona">
+        <div class="ms-panel-search"><input type="text" placeholder="Search&hellip;" oninput="filterOptions('Persona',this.value)"/></div>
+        <div class="ms-panel-actions">
+          <button class="ms-act-btn" onclick="selectAll('Persona')">Select All</button>
+          <button class="ms-act-btn" onclick="clearSel('Persona')">Clear</button>
+        </div>
+        <div class="ms-options" id="opts-Persona"></div>
+      </div>
+    </div>
   </div>
 
-  <div class="fg">
-    <div class="flbl">Menu</div>
-    <select id="fMenu" onchange="applyFilters()">
-      <option value="">All Menus (208)</option>
-      <option value="Assessment">Assessment (3)</option>
-      <option value="Benefits">Benefits (35)</option>
-      <option value="Compliance Management">Compliance Management (1)</option>
-      <option value="Corporate services">Corporate services (5)</option>
-      <option value="Diversity and Inclusion">Diversity and Inclusion (6)</option>
-      <option value="Employee Engagement">Employee Engagement (4)</option>
-      <option value="Home">Home (13)</option>
-      <option value="Leave &amp; Attendance">Leave &amp; Attendance (9)</option>
-      <option value="Payroll">Payroll (13)</option>
-      <option value="Performance Management">Performance Management (1)</option>
-      <option value="Personal Details">Personal Details (11)</option>
-      <option value="Reimbursement">Reimbursement (3)</option>
-      <option value="Security services">Security services (2)</option>
-      <option value="Self Services">Self Services (78)</option>
-      <option value="Store Manager">Store Manager (14)</option>
-      <option value="Talent Acquisition">Talent Acquisition (2)</option>
-      <option value="Talent Management">Talent Management (2)</option>
-      <option value="Talent Marketplace">Talent Marketplace (4)</option>
-      <option value="Travel &amp; Guest House">Travel &amp; Guest House (2)</option>
-    </select>
+  <!-- Menu -->
+  <div class="fg" id="wrap-Menu">
+    <div class="flbl">Menu <span class="flbl-tag">Multi</span></div>
+    <div class="ms-wrap" id="ms-Menu">
+      <div class="ms-trigger" id="trig-Menu" onclick="togglePanel('Menu')">
+        <div class="ms-chips" id="chips-Menu"><span class="ms-trigger-text placeholder">All Menus</span></div>
+        <span class="ms-arrow">&#9660;</span>
+      </div>
+      <div class="ms-panel" id="panel-Menu">
+        <div class="ms-panel-search"><input type="text" placeholder="Search&hellip;" oninput="filterOptions('Menu',this.value)"/></div>
+        <div class="ms-panel-actions">
+          <button class="ms-act-btn" onclick="selectAll('Menu')">Select All</button>
+          <button class="ms-act-btn" onclick="clearSel('Menu')">Clear</button>
+        </div>
+        <div class="ms-options" id="opts-Menu"></div>
+      </div>
+    </div>
   </div>
 
-  <div class="fg">
-    <div class="flbl">Web</div>
-    <select id="fWeb" onchange="applyFilters()">
-      <option value="">All Web (208)</option>
-      <option value="App-in App">App-in App (18)</option>
-      <option value="Fiori">Fiori (79)</option>
-      <option value="Peoplefirst">Peoplefirst (89)</option>
-      <option value="URL">URL (22)</option>
-    </select>
+  <!-- Web -->
+  <div class="fg" id="wrap-Web">
+    <div class="flbl">Web <span class="flbl-tag">Multi</span></div>
+    <div class="ms-wrap" id="ms-Web">
+      <div class="ms-trigger" id="trig-Web" onclick="togglePanel('Web')">
+        <div class="ms-chips" id="chips-Web"><span class="ms-trigger-text placeholder">All Web</span></div>
+        <span class="ms-arrow">&#9660;</span>
+      </div>
+      <div class="ms-panel" id="panel-Web">
+        <div class="ms-panel-actions">
+          <button class="ms-act-btn" onclick="selectAll('Web')">Select All</button>
+          <button class="ms-act-btn" onclick="clearSel('Web')">Clear</button>
+        </div>
+        <div class="ms-options" id="opts-Web"></div>
+      </div>
+    </div>
   </div>
 
-  <div class="fg">
-    <div class="flbl">Mobile</div>
-    <select id="fMobile" onchange="applyFilters()">
-      <option value="">All Mobile (208)</option>
-      <option value="App-in App">App-in App (1)</option>
-      <option value="Fiori">Fiori (64)</option>
-      <option value="Not in Mobile">Not in Mobile (49)</option>
-      <option value="Peoplefirst">Peoplefirst (73)</option>
-      <option value="URL">URL (21)</option>
-    </select>
+  <!-- Mobile -->
+  <div class="fg" id="wrap-Mobile">
+    <div class="flbl">Mobile <span class="flbl-tag">Multi</span></div>
+    <div class="ms-wrap" id="ms-Mobile">
+      <div class="ms-trigger" id="trig-Mobile" onclick="togglePanel('Mobile')">
+        <div class="ms-chips" id="chips-Mobile"><span class="ms-trigger-text placeholder">All Mobile</span></div>
+        <span class="ms-arrow">&#9660;</span>
+      </div>
+      <div class="ms-panel" id="panel-Mobile">
+        <div class="ms-panel-actions">
+          <button class="ms-act-btn" onclick="selectAll('Mobile')">Select All</button>
+          <button class="ms-act-btn" onclick="clearSel('Mobile')">Clear</button>
+        </div>
+        <div class="ms-options" id="opts-Mobile"></div>
+      </div>
+    </div>
   </div>
 
-  <div class="fg">
-    <div class="flbl">To-be SOR</div>
-    <select id="fSOR" onchange="applyFilters()">
-      <option value="">All To-be SOR (208)</option>
-      <option value="Available in ZingHR, Link for App to be shared">Available in ZingHR, Link for App to be shared (68)</option>
-      <option value="Not Available in zingHR - Solution being planned">Not Available in zingHR - Solution being planned (5)</option>
-      <option value="Not Available in zingHR - TBD">Not Available in zingHR - TBD (62)</option>
-      <option value="PeopleFirst">PeopleFirst (28)</option>
-      <option value="ZingHR">ZingHR (16)</option>
-      <option value="ZingHR - Being developed in Total Rewards System">ZingHR - Being developed in Total Rewards System (29)</option>
-    </select>
+  <!-- To-be SOR -->
+  <div class="fg" id="wrap-SOR">
+    <div class="flbl">To-be SOR <span class="flbl-tag">Multi</span></div>
+    <div class="ms-wrap" id="ms-SOR">
+      <div class="ms-trigger" id="trig-SOR" onclick="togglePanel('SOR')">
+        <div class="ms-chips" id="chips-SOR"><span class="ms-trigger-text placeholder">All To-be SOR</span></div>
+        <span class="ms-arrow">&#9660;</span>
+      </div>
+      <div class="ms-panel" id="panel-SOR">
+        <div class="ms-panel-search"><input type="text" placeholder="Search&hellip;" oninput="filterOptions('SOR',this.value)"/></div>
+        <div class="ms-panel-actions">
+          <button class="ms-act-btn" onclick="selectAll('SOR')">Select All</button>
+          <button class="ms-act-btn" onclick="clearSel('SOR')">Clear</button>
+        </div>
+        <div class="ms-options" id="opts-SOR"></div>
+      </div>
+    </div>
   </div>
 
-  <button class="btn-reset" onclick="resetFilters()">&#10005; Reset</button>
+  <button class="btn-reset" onclick="resetAllFilters()">&#10005; Reset</button>
 </div>
 
+<!-- ACTIVE FILTER TAGS -->
+<div class="active-filters" id="activeTags"></div>
+
+<!-- KPI CARDS -->
 <div class="krow">
   <div class="kpi k1">
     <div class="klbl">Total Services</div>
@@ -232,6 +323,7 @@ td{padding:10px 14px;font-size:12.5px;vertical-align:top}
   </div>
 </div>
 
+<!-- TABLE -->
 <div class="tcard">
   <div class="thead2">
     <div class="ttitle">Service Inventory</div>
@@ -281,78 +373,170 @@ let FILTERED = [...ALL];
 let PAGE = 1;
 const PER = 30;
 
-const ZING_VALS = [
-  'ZingHR',
-  'Available in ZingHR, Link for App to be shared',
-  'ZingHR - Being developed in Total Rewards System'
-];
-const NOT_AVAIL_VALS = [
-  'Not Available in zingHR - TBD',
-  'Not Available in zingHR - Solution being planned'
-];
+// Filter state: each key holds a Set of selected values
+const SEL = { Persona: new Set(), Menu: new Set(), Web: new Set(), Mobile: new Set(), SOR: new Set() };
+
+// Map filter key -> data column
+const KEY_COL = { Persona:'Persona', Menu:'Menu', Web:'Web', Mobile:'Mobile', SOR:'To-be SOR' };
+
+// All options per filter (populated from data)
+const ALL_OPTS = {};
+
+const ZING_VALS = ['ZingHR','Available in ZingHR, Link for App to be shared','ZingHR - Being developed in Total Rewards System'];
+const NOT_AVAIL = ['Not Available in zingHR - TBD','Not Available in zingHR - Solution being planned'];
 
 function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
-function chipWeb(v){
-  const m={'Peoplefirst':'pf','Fiori':'fi','URL':'ur','App-in App':'ai'};
-  return v ? `<span class="chip ${m[v]||'nm'}">${esc(v)}</span>` : '<span class="chip nm">—</span>';
-}
-function chipMob(v){
-  if(!v) return '<span style="color:#d0dae4;font-size:12px">—</span>';
-  const m={'Peoplefirst':'pf','Fiori':'fi','URL':'ur','App-in App':'ai','Not in Mobile':'nm'};
-  return `<span class="chip ${m[v]||'nm'}">${esc(v)}</span>`;
-}
-function chipPersona(v){
-  const m={'Employee':'pe','Manager':'ma','HRBP':'hrp','Store Manager':'sm','CUG':'cg'};
-  return `<span class="chip ${m[v]||'pe'}">${esc(v)}</span>`;
-}
-function chipSOR(v){
-  if(!v) return '<span class="chip sna">—</span>';
-  if(v==='PeopleFirst')                                             return '<span class="chip spf">PeopleFirst</span>';
-  if(v==='Available in ZingHR, Link for App to be shared')         return '<span class="chip szh">ZingHR ✓</span>';
-  if(v==='ZingHR')                                                  return '<span class="chip szh">ZingHR</span>';
-  if(v==='ZingHR - Being developed in Total Rewards System')        return '<span class="chip szd">ZingHR (Dev)</span>';
-  if(v==='Not Available in zingHR - TBD')                          return '<span class="chip stb">Not Available – TBD</span>';
-  if(v==='Not Available in zingHR - Solution being planned')        return '<span class="chip spl">Not Available – Planned</span>';
-  if(v==='Opigno') return '<span class="chip sop">Opigno</span>';
-  if(v==='URL')    return '<span class="chip ur">URL</span>';
-  return `<span class="chip sna">${esc(v)}</span>`;
-}
-function chipAis(v){
-  const m={'SAP':'sap','PeopleFirst':'spf','ZingHR':'szh','URL':'ur','Opigno':'sop'};
-  return v ? `<span class="chip ${m[v]||'sna'}">${esc(v)}</span>` : '<span class="chip sna">—</span>';
-}
-
-function applyFilters(){
-  const persona = document.getElementById('fPersona').value;
-  const menu    = document.getElementById('fMenu').value;
-  const web     = document.getElementById('fWeb').value;
-  const mob     = document.getElementById('fMobile').value;
-  const sor     = document.getElementById('fSOR').value;
-  const q       = document.getElementById('fSearch').value.toLowerCase().trim();
-
-  FILTERED = ALL.filter(r => {
-    if(persona && r['Persona']   !== persona) return false;
-    if(menu    && r['Menu']      !== menu)    return false;
-    if(web     && r['Web']       !== web)     return false;
-    if(mob     && r['Mobile']    !== mob)     return false;
-    if(sor     && r['To-be SOR'] !== sor)     return false;
-    if(q && !r['Service Name'].toLowerCase().includes(q)
-          && !r['Service Description'].toLowerCase().includes(q)) return false;
-    return true;
+// ── INIT DROPDOWNS ──
+function initDropdowns(dataArr) {
+  Object.keys(SEL).forEach(fk => {
+    const col = KEY_COL[fk];
+    const vals = [...new Set(dataArr.map(r => r[col]).filter(v => v && v !== 'nan'))].sort();
+    ALL_OPTS[fk] = vals;
+    renderOptions(fk, vals);
   });
-  PAGE = 1;
-  updateKPIs();
-  renderTable();
 }
 
-function resetFilters(){
-  ['fPersona','fMenu','fWeb','fMobile','fSOR'].forEach(id => document.getElementById(id).value = '');
-  document.getElementById('fSearch').value = '';
+function renderOptions(fk, vals) {
+  const cont = document.getElementById('opts-' + fk);
+  if (!vals.length) { cont.innerHTML = '<div class="ms-empty">No options</div>'; return; }
+  cont.innerHTML = vals.map(v => `
+    <div class="ms-option ${SEL[fk].has(v)?'selected':''}" onclick="toggleOpt('${fk}','${v.replace(/'/g,"\'")}')">
+      <input type="checkbox" ${SEL[fk].has(v)?'checked':''} onclick="event.stopPropagation();toggleOpt('${fk}','${v.replace(/'/g,"\'")}')"/>
+      <span class="ms-option-label">${esc(v)}</span>
+    </div>`).join('');
+}
+
+function filterOptions(fk, q) {
+  const filtered = ALL_OPTS[fk].filter(v => v.toLowerCase().includes(q.toLowerCase()));
+  renderOptions(fk, filtered);
+}
+
+// ── TOGGLE OPTION ──
+function toggleOpt(fk, val) {
+  if (SEL[fk].has(val)) SEL[fk].delete(val);
+  else SEL[fk].add(val);
+  renderOptions(fk, ALL_OPTS[fk]);
+  updateTrigger(fk);
   applyFilters();
 }
 
-function updateKPIs(){
+function selectAll(fk) {
+  ALL_OPTS[fk].forEach(v => SEL[fk].add(v));
+  renderOptions(fk, ALL_OPTS[fk]);
+  updateTrigger(fk);
+  applyFilters();
+}
+
+function clearSel(fk) {
+  SEL[fk].clear();
+  renderOptions(fk, ALL_OPTS[fk]);
+  updateTrigger(fk);
+  applyFilters();
+}
+
+// ── UPDATE TRIGGER DISPLAY ──
+function updateTrigger(fk) {
+  const chipsEl = document.getElementById('chips-' + fk);
+  const trig    = document.getElementById('trig-' + fk);
+  const labels  = { Persona:'All Personas', Menu:'All Menus', Web:'All Web', Mobile:'All Mobile', SOR:'All To-be SOR' };
+
+  if (SEL[fk].size === 0) {
+    chipsEl.innerHTML = `<span class="ms-trigger-text placeholder">${labels[fk]}</span>`;
+  } else {
+    const vals = [...SEL[fk]];
+    const maxShow = 2;
+    const shown = vals.slice(0, maxShow);
+    const rest  = vals.length - maxShow;
+    let html = shown.map(v => `
+      <span class="ms-chip">${esc(v.length > 18 ? v.slice(0,16)+'…' : v)}
+        <span class="ms-chip-x" onclick="event.stopPropagation();toggleOpt('${fk}','${v.replace(/'/g,"\'")}')">&#10005;</span>
+      </span>`).join('');
+    if (rest > 0) html += `<span class="ms-more">+${rest} more</span>`;
+    chipsEl.innerHTML = html;
+  }
+}
+
+// ── PANEL TOGGLE ──
+function togglePanel(fk) {
+  const panel = document.getElementById('panel-' + fk);
+  const trig  = document.getElementById('trig-' + fk);
+  const isOpen = panel.classList.contains('open');
+  closeAllPanels();
+  if (!isOpen) {
+    panel.classList.add('open');
+    trig.classList.add('open');
+    // reset panel search
+    const si = panel.querySelector('.ms-panel-search input');
+    if (si) { si.value = ''; renderOptions(fk, ALL_OPTS[fk]); }
+  }
+}
+
+function closeAllPanels() {
+  Object.keys(SEL).forEach(fk => {
+    document.getElementById('panel-' + fk)?.classList.remove('open');
+    document.getElementById('trig-' + fk)?.classList.remove('open');
+  });
+}
+
+// Close panels on outside click
+document.addEventListener('click', e => {
+  if (!e.target.closest('.ms-wrap') && !e.target.closest('.ms-panel')) closeAllPanels();
+});
+
+// ── ACTIVE TAGS ──
+function renderActiveTags() {
+  const labels = { Persona:'Persona', Menu:'Menu', Web:'Web', Mobile:'Mobile', SOR:'To-be SOR' };
+  const cont = document.getElementById('activeTags');
+  let html = '';
+  let hasAny = false;
+  Object.keys(SEL).forEach(fk => {
+    SEL[fk].forEach(v => {
+      hasAny = true;
+      const short = v.length > 30 ? v.slice(0,28)+'…' : v;
+      html += `<span class="af-tag">
+        <span class="af-tag-key">${labels[fk]}:</span>
+        <span class="af-tag-val">${esc(short)}</span>
+        <span class="af-tag-x" onclick="toggleOpt('${fk}','${v.replace(/'/g,"\'")}')">&#10005;</span>
+      </span>`;
+    });
+  });
+  if (hasAny) html += `<span class="af-clear-all" onclick="resetAllFilters()">Clear All</span>`;
+  cont.innerHTML = html;
+}
+
+// ── APPLY FILTERS ──
+function applyFilters() {
+  const q = document.getElementById('fSearch').value.toLowerCase().trim();
+
+  FILTERED = ALL.filter(r => {
+    for (const fk of Object.keys(SEL)) {
+      if (SEL[fk].size > 0 && !SEL[fk].has(r[KEY_COL[fk]])) return false;
+    }
+    if (q && !r['Service Name'].toLowerCase().includes(q)
+          && !r['Service Description'].toLowerCase().includes(q)) return false;
+    return true;
+  });
+
+  PAGE = 1;
+  updateKPIs();
+  renderActiveTags();
+  renderTable();
+}
+
+function resetAllFilters() {
+  Object.keys(SEL).forEach(fk => {
+    SEL[fk].clear();
+    renderOptions(fk, ALL_OPTS[fk]);
+    updateTrigger(fk);
+  });
+  document.getElementById('fSearch').value = '';
+  closeAllPanels();
+  applyFilters();
+}
+
+// ── KPIs ──
+function updateKPIs() {
   const n = FILTERED.length;
   document.getElementById('kT').textContent  = n;
   document.getElementById('hbadge').textContent = n + ' Services';
@@ -361,7 +545,7 @@ function updateKPIs(){
 
   const zCounts = {};
   ZING_VALS.forEach(v => { zCounts[v] = FILTERED.filter(r => r['To-be SOR']===v).length; });
-  const totalZ = Object.values(zCounts).reduce((a,b) => a+b, 0);
+  const totalZ = Object.values(zCounts).reduce((a,b)=>a+b,0);
   document.getElementById('kZ').textContent = totalZ;
   document.getElementById('kZdetail').textContent =
     `ZingHR(${zCounts['ZingHR']}) + Available(${zCounts['Available in ZingHR, Link for App to be shared']}) + Dev(${zCounts['ZingHR - Being developed in Total Rewards System']})`;
@@ -374,7 +558,39 @@ function updateKPIs(){
   document.getElementById('kNdetail').textContent = `TBD(${tbd}) + Planned(${planned})`;
 }
 
-function renderTable(){
+// ── CHIPS ──
+function chipWeb(v){
+  const m={'Peoplefirst':'pf','Fiori':'fi','URL':'ur','App-in App':'ai'};
+  return v?`<span class="chip ${m[v]||'nm'}">${esc(v)}</span>`:'<span class="chip nm">—</span>';
+}
+function chipMob(v){
+  if(!v) return '<span style="color:#d0dae4;font-size:12px">—</span>';
+  const m={'Peoplefirst':'pf','Fiori':'fi','URL':'ur','App-in App':'ai','Not in Mobile':'nm'};
+  return `<span class="chip ${m[v]||'nm'}">${esc(v)}</span>`;
+}
+function chipPersona(v){
+  const m={'Employee':'pe','Manager':'ma','HRBP':'hrp','Store Manager':'sm','CUG':'cg'};
+  return `<span class="chip ${m[v]||'pe'}">${esc(v)}</span>`;
+}
+function chipSOR(v){
+  if(!v) return '<span class="chip sna">—</span>';
+  if(v==='PeopleFirst')                                           return '<span class="chip spf">PeopleFirst</span>';
+  if(v==='Available in ZingHR, Link for App to be shared')        return '<span class="chip szh">ZingHR ✓</span>';
+  if(v==='ZingHR')                                                return '<span class="chip szh">ZingHR</span>';
+  if(v==='ZingHR - Being developed in Total Rewards System')      return '<span class="chip szd">ZingHR (Dev)</span>';
+  if(v==='Not Available in zingHR - TBD')                        return '<span class="chip stb">Not Available – TBD</span>';
+  if(v==='Not Available in zingHR - Solution being planned')      return '<span class="chip spl">Not Available – Planned</span>';
+  if(v==='Opigno') return '<span class="chip sop">Opigno</span>';
+  if(v==='URL')    return '<span class="chip ur">URL</span>';
+  return `<span class="chip sna">${esc(v)}</span>`;
+}
+function chipAis(v){
+  const m={'SAP':'sap','PeopleFirst':'spf','ZingHR':'szh','URL':'ur','Opigno':'sop'};
+  return v?`<span class="chip ${m[v]||'sna'}">${esc(v)}</span>`:'<span class="chip sna">—</span>';
+}
+
+// ── TABLE ──
+function renderTable() {
   const total = FILTERED.length;
   const pages = Math.ceil(total/PER);
   const start = (PAGE-1)*PER;
@@ -386,7 +602,7 @@ function renderTable(){
       <td class="srno">${esc(r['SR'])}</td>
       <td style="min-width:200px">
         <div class="sname">${esc(r['Service Name'])}</div>
-        ${r['Service Description'] ? `<div class="sdesc">${esc(r['Service Description'])}</div>` : ''}
+        ${r['Service Description']?`<div class="sdesc">${esc(r['Service Description'])}</div>`:''}
       </td>
       <td style="white-space:nowrap;font-size:12px;color:#2d4a6a">${esc(r['Menu'])}</td>
       <td>${chipPersona(r['Persona'])}</td>
@@ -406,93 +622,75 @@ function renderTable(){
   if(pages<=1){ btns.innerHTML=''; return; }
   let h = `<button class="pb" onclick="goPage(${PAGE-1})" ${PAGE===1?'disabled':''}>&#8249;</button>`;
   for(let p=1; p<=pages; p++){
-    if(p===1 || p===pages || Math.abs(p-PAGE)<=1)
-      h += `<button class="pb ${p===PAGE?'active':''}" onclick="goPage(${p})">${p}</button>`;
+    if(p===1||p===pages||Math.abs(p-PAGE)<=1)
+      h+=`<button class="pb ${p===PAGE?'active':''}" onclick="goPage(${p})">${p}</button>`;
     else if(Math.abs(p-PAGE)===2)
-      h += `<span style="padding:0 3px;color:#c8d5e0;display:flex;align-items:center">…</span>`;
+      h+=`<span style="padding:0 3px;color:#c8d5e0;display:flex;align-items:center">…</span>`;
   }
-  h += `<button class="pb" onclick="goPage(${PAGE+1})" ${PAGE===pages?'disabled':''}>&#8250;</button>`;
+  h+=`<button class="pb" onclick="goPage(${PAGE+1})" ${PAGE===pages?'disabled':''}>&#8250;</button>`;
   btns.innerHTML = h;
 }
 
 function goPage(p){
-  PAGE = p;
+  PAGE=p;
   renderTable();
-  document.querySelector('.tcard').scrollIntoView({behavior:'smooth', block:'start'});
+  document.querySelector('.tcard').scrollIntoView({behavior:'smooth',block:'start'});
 }
 
+// ── LOAD FILE ──
 function loadFile(input){
-  const file = input.files[0]; if(!file) return;
-  const btn = document.getElementById('refBtn');
+  const file=input.files[0]; if(!file) return;
+  const btn=document.getElementById('refBtn');
   btn.classList.add('loading');
-  const reader = new FileReader();
-  reader.onload = e => {
+  const reader=new FileReader();
+  reader.onload=e=>{
     try{
-      const wb = XLSX.read(e.target.result, {type:'array'});
-      const sn = wb.SheetNames.includes('List of services') ? 'List of services' : wb.SheetNames[0];
-      const rows = XLSX.utils.sheet_to_json(wb.Sheets[sn], {defval:''});
-      const mapped = rows.map(r => ({
-        'SR':                  String(r['SR']||'').trim(),
-        'Menu':                String(r['Menu']||'').trim(),
-        'BU Code':             String(r['BU Code']||'').trim(),
-        'Persona':             String(r['Persona']||'').trim(),
-        'Service Name':        String(r['Service Name']||r['Service']||'').trim(),
-        'Service Description': String(r['Service Description']||r['Description']||'').trim(),
-        'Web':                 String(r['Web']||'').trim(),
-        'Mobile':              String(r['Mobile']||'').trim(),
-        'As-is SOR':           String(r['As-is SOR']||'').trim(),
-        'To-be SOR':           String(r['To-be SOR']||'').trim(),
-        'Zing HR Tech Name':   String(r['Zing HR Tech Name']||'').trim(),
-        'Zing HR Tile link':   String(r['Zing HR Tile link']||'').trim(),
-        'ETA CUG':             String(r['ETA CUG']||'').replace(/\s00:00:00$/,'').trim(),
-        'ETA ALL':             String(r['ETA ALL']||'').replace(/\s00:00:00$/,'').trim(),
-        'Team':                String(r['Team']||'').trim(),
-        'Process':             String(r['Process']||'').trim(),
-      })).map(r => {
-        const o = {};
-        for(const k in r) o[k] = r[k].replace(/​/g,'').trim();
-        return o;
-      }).filter(r => r['Service Name'] && r['Service Name'] !== 'nan');
-
-      if(!mapped.length) throw new Error('No valid rows found in "List of services" sheet.');
-      ALL = mapped;
-      rebuildDropdowns();
+      const wb=XLSX.read(e.target.result,{type:'array'});
+      const sn=wb.SheetNames.includes('List of services')?'List of services':wb.SheetNames[0];
+      const rows=XLSX.utils.sheet_to_json(wb.Sheets[sn],{defval:''});
+      const mapped=rows.map(r=>({
+        'SR':String(r['SR']||'').trim(),
+        'Menu':String(r['Menu']||'').trim(),
+        'BU Code':String(r['BU Code']||'').trim(),
+        'Persona':String(r['Persona']||'').trim(),
+        'Service Name':String(r['Service Name']||r['Service']||'').trim(),
+        'Service Description':String(r['Service Description']||r['Description']||'').trim(),
+        'Web':String(r['Web']||'').trim(),
+        'Mobile':String(r['Mobile']||'').trim(),
+        'As-is SOR':String(r['As-is SOR']||'').trim(),
+        'To-be SOR':String(r['To-be SOR']||'').trim(),
+        'Zing HR Tech Name':String(r['Zing HR Tech Name']||'').trim(),
+        'Zing HR Tile link':String(r['Zing HR Tile link']||'').trim(),
+        'ETA CUG':String(r['ETA CUG']||'').replace(/\s00:00:00$/,'').trim(),
+        'ETA ALL':String(r['ETA ALL']||'').replace(/\s00:00:00$/,'').trim(),
+        'Team':String(r['Team']||'').trim(),
+        'Process':String(r['Process']||'').trim(),
+      })).map(r=>{
+        const o={}; for(const k in r) o[k]=r[k].replace(/\u200b/g,'').trim(); return o;
+      }).filter(r=>r['Service Name']&&r['Service Name']!=='nan');
+      if(!mapped.length) throw new Error('No valid rows found.');
+      ALL=[...mapped];
+      // Reset selections
+      Object.keys(SEL).forEach(fk=>SEL[fk].clear());
+      initDropdowns(ALL);
+      Object.keys(SEL).forEach(fk=>updateTrigger(fk));
       applyFilters();
-      showToast('✓ Refreshed — ' + mapped.length + ' services loaded from "' + file.name + '"');
-    } catch(err){ showToast('⚠ Error: ' + err.message); }
+      showToast('✓ Refreshed — '+mapped.length+' services loaded from "'+file.name+'"');
+    }catch(err){ showToast('⚠ Error: '+err.message); }
     btn.classList.remove('loading');
-    input.value = '';
+    input.value='';
   };
   reader.readAsArrayBuffer(file);
 }
 
-function rebuildDropdowns(){
-  const cfg = {
-    fPersona: {label:'All Personas', key:'Persona'},
-    fMenu:    {label:'All Menus',    key:'Menu'},
-    fWeb:     {label:'All Web',      key:'Web'},
-    fMobile:  {label:'All Mobile',   key:'Mobile'},
-    fSOR:     {label:'All To-be SOR',key:'To-be SOR'}
-  };
-  for(const [id, c] of Object.entries(cfg)){
-    const sel = document.getElementById(id);
-    const cur = sel.value;
-    const counts = {};
-    ALL.forEach(r => { const v = r[c.key]; if(v && v!=='nan') counts[v] = (counts[v]||0)+1; });
-    const total = ALL.length;
-    sel.innerHTML = `<option value="">${c.label} (${total})</option>`
-      + Object.keys(counts).sort().map(v =>
-          `<option value="${esc(v)}"${v===cur?' selected':''}>${esc(v)} (${counts[v]})</option>`
-        ).join('');
-  }
-}
-
 function showToast(msg){
-  const t = document.getElementById('toast');
-  t.textContent = msg; t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 4000);
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),4000);
 }
 
+// ── INIT ──
+initDropdowns(ALL);
 applyFilters();
 </script>
 </body>
